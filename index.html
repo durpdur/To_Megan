@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>To_Megan</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="question">
+            <h4>IAN'S CLUE</h4>
+            <h1>MEGAN</h1>
+        </div>
+
+        <div class="game-area">
+            <div class="board-container">
+                <div class="game-board">
+                    <div class="blank-layer"></div>
+                
+                    <div class="score-layer" id="score_layer">
+                        <span class="score-num n1">2</span>
+                        <span class="score-num n2">3</span>
+                        <span class="score-num n3">4</span>
+                    </div>
+                
+                    <div class="dial-layer" id="dial"></div>
+                    <div class="pivot-point"></div>
+                </div>
+                
+                <div class="left-label">OK</div>
+                <div class="right-label">SUPER HOT</div>
+            </div>
+
+            <div class="controls">
+                <input type="range" min="0" max="180" value="90" id="slider">
+                <button id="check-btn">Check Score</button>
+                <p id="message"></p>
+            </div>
+            
+
+        </div>
+
+        <script src="script.js"></script>
+    </body>
+</html>

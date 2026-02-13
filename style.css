@@ -1,0 +1,199 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap');
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: #222;
+    font-family: 'Outfit', sans-serif;
+}
+
+.question {
+    color: white;
+    text-align: center;
+}
+
+.question h4, .question h1 {
+    margin: 5px 0; /* Tightens up the spacing */
+}
+
+/* Container to hold the board and the labels */
+.board-container {
+    position: relative;
+    width: 400px; /* Same as game-board */
+    margin-bottom: 40px; /* Space before the slider */
+}
+
+/* Positioning the labels under the corners */
+.left-label, .right-label {
+    position: absolute;
+    top: 210px; /* Just below the 200px height of the board */
+    color: #eee8db;
+    font-weight: bold;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.left-label {
+    left: 0;
+}
+
+.right-label {
+    right: 0;
+}
+
+/* Center the whole game area */
+.game-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 1. Main Container: Clips everything into a semi-circle */
+.game-board {
+    position: relative;
+    width: 400px;
+    height: 200px; /* Half the width */
+    overflow: hidden; /* This chops off the bottom half */
+    margin-bottom: 20px;
+}
+
+/* 2. The Blank Background (The "Board") */
+.blank-layer {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 400px; /* Full circle height to enable border-radius */
+    background-color: #eee8db;
+    border-radius: 50%; /* Makes it a circle */
+}
+
+/* 3. The Score Layer (The "Target") */
+.score-layer {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 400px;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    
+    background: conic-gradient(
+        /* Transparent from start (0) up to the target zone (160) */
+        transparent 0deg 150deg, 
+        #f4b95f 150deg 160deg,
+        #ed6c39 160deg 170deg,
+        #64abd4 170deg 180deg,
+
+        /* Transparent for the rest of the circle */
+        transparent 180deg 360deg
+    );
+    
+    /* Rotate -90deg so 0 starts at the left horizon, not top */
+    transform: rotate(-90deg); 
+}
+
+/* When this class is added via JavaScript */
+.score-layer.show_score {
+    opacity: 1;
+}
+
+/* Base style for all numbers */
+.score-num {
+    position: absolute;
+    bottom: 50%; /* Pivot point (center of the circle) */
+    left: 50%;
+    width: 20px;
+    height: 185px; /* Adjust this to move number closer/further from edge */
+    margin-left: -10px; /* Center horizontally on pivot */
+    transform-origin: bottom center;
+    
+    color: black;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Pushes text to the outer edge of the height */
+    font-size: 14px;
+}
+
+/* Position each number at the midpoint of its colored slice */
+.n1 { transform: rotate(155deg); } /* Midpoint of 150-160 */
+.n2 { transform: rotate(165deg); } /* Midpoint of 160-170 */
+.n3 { transform: rotate(175deg); } /* Midpoint of 170-180 */
+
+/* 4. The Red Dial */
+.dial-layer {
+    position: absolute;
+    bottom: 0; /* Pinned to bottom of the visible area */
+    left: 50%;
+    width: 10px;
+    height: 180px; /* Length of needle */
+    background-color: #cb3641;
+    margin-left: -5px;
+    transform-origin: bottom center; /* Pivot point */
+    transform: rotate(0deg); /* Starts far left */
+    transition: transform 0.1s ease-out;
+    z-index: 10;
+    border-radius: 4px;
+}
+
+/* Just a cover for the pivot point to look nice */
+.pivot-point {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    background: #cb3641;
+    border-radius: 50%;
+    transform: translate(-50%, 0);
+    z-index: 11;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers the button and slider horizontally */
+    width: 400px;        /* Matches the game-board width */
+    gap: 20px;           /* Adds space between slider, button, and message */
+}
+
+input[type=range] {
+    width: 100%;         /* Takes up the full 400px width */
+    cursor: pointer;
+    margin: 0;           /* Removes default browser margins */
+}
+
+button {
+    padding: 12px 40px;
+    margin-top: 10px;    /* Extra padding specifically on top of the button */
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background-color: #cb3641;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.1s, background 0.2s;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+button:hover { 
+    background-color: #b02a33; 
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+
+button:active {
+    transform: translateY(0);    /* "Push" effect when clicked */
+}
+
+#message {
+    height: 24px;       /* Fixed height prevents the layout from "jumping" when text appears */
+    font-weight: bold;
+    margin-top: 5px;
+}
